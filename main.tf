@@ -5,7 +5,6 @@ provider "aws" {
 variable "aws_region" {
   description = "The AWS region where resources will be created."
   type        = string
-  default     = "ap-southeast-1"
 }
 
 variable "account_id" {
