@@ -69,8 +69,10 @@ resource "aws_iam_user_group_membership" "example_user_group_membership" {
 
 # Optional - Attach a policy to the group
 resource "aws_iam_group_policy" "allow_ec2_hf_access_aws_services" {
-  name        = "${var.agency_code}_ABLR_CloudWatchAccess"
+  name        = "${var.agency_code}_ABLR_CloudWatchAccess"  description = "The AWS account ID where resources will be created."
+
   group = aws_iam_group.example_group.name
+  description = "The iam policy is meant to attach to iam user which pushes cloudtrail logs to ABLR"
 
   policy = jsonencode({
     "Version": "2012-10-17",
