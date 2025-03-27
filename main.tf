@@ -12,14 +12,21 @@ variable "account_id" {
   type        = string
 }
 
+variable "agency_code" {
+  description = "The AWS account ID where resources will be created."
+  type        = string
+}
+
 variable "example_user" {
   description = "The AWS account user where resources will be created."
   type        = string
+  default     = "${var.agency_code}_ABLR_Cloudwatch"
 }
 
 variable "example_group" {
   description = "The AWS account group where resources will be created."
-  type        = string  
+  type        = string
+  default     = "${var.agency_code}_ABLR_Cloudwatch_Group"
 }
 
 data "aws_vpc_endpoint" "sts" {
@@ -62,7 +69,7 @@ resource "aws_iam_user_group_membership" "example_user_group_membership" {
 
 # Optional - Attach a policy to the group
 resource "aws_iam_group_policy" "allow_ec2_hf_access_aws_services" {
-  name        = "EC2_HF_Access_AWS_Services"
+  name        = "${var.agency_code}_ABLR_CloudwatchAccess"
   group = aws_iam_group.example_group.name
 
   policy = jsonencode({
