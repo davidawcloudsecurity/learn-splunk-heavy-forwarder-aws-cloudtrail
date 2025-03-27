@@ -34,6 +34,11 @@ output "log_vpce_endpoint" {
   value = data.aws_vpc_endpoint.log.dns_entry
 }
 
+resource "aws_cloudwatch_log_group" "example" {
+  name              = "cwl-${var.account_id}-cloudtrail"
+  retention_in_days = 7
+}
+
 # Please check if this matches your platform-policy-new1.json
 resource "aws_iam_policy" "allow_ec2_hf_access_aws_services" {
   name        = "EC2_HF_Access_AWS_Services"
