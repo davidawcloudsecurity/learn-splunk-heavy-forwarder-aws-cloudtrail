@@ -23,10 +23,10 @@ output "sts_vpce_endpoint" {
   value = data.aws_vpc_endpoint.sts.dns_entry
 }
 
-data "aws_vpc_endpoint" "log" {
+data "aws_vpc_endpoint" "logs" {
   filter {
     name   = "service-name"
-    values = ["com.amazonaws.${var.aws_region}.log"]
+    values = ["com.amazonaws.${var.aws_region}.logs"]
   }
 }
 
