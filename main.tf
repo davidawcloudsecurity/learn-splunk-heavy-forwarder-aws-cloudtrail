@@ -15,6 +15,7 @@ variable "account_id" {
 variable "agency_code" {
   description = "The AWS account ID where resources will be created."
   type        = string
+  default     = "EG"
 }
 
 variable "example_user" {
