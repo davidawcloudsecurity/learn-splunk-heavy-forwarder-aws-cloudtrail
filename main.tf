@@ -141,6 +141,7 @@ resource "aws_iam_group_policy" "allow_ec2_hf_access_aws_services" {
           "kms:Decrypt",
           "sts:AssumeRole"
         ],
+        "Sid": "AllowEC2ToAccessAWSServices",
         "Effect": "Allow",
         "Resource": [
           "arn:aws:logs:ap-southeast-1:${var.account_id}:log-group:cwl-${var.account_id}-cloudtrail:*"
