@@ -12,6 +12,11 @@ variable "account_id" {
   type        = string
 }
 
+variable "example_user" {
+  description = "The AWS account user where resources will be created."
+  type        = string
+}
+
 data "aws_vpc_endpoint" "sts" {
   filter {
     name   = "service-name"
@@ -37,6 +42,22 @@ output "logs_vpce_endpoint" {
 resource "aws_cloudwatch_log_group" "example" {
   name              = "cwl-${var.account_id}-cloudtrail"
   retention_in_days = 365
+}
+
+resource "aws_iam_user" "example_user" {
+  name = var.example_user
+}
+
+resource "aws_iam_access_key" "example_access_key" {
+  user = aws_iam_user.example_user.name
+}
+
+output "access_key_id" {
+  value = aws_iam_access_key.example_access_key.id
+}
+
+output "secret_access_key" {
+  value = aws_iam_access_key.example_access_key.secret
 }
 
 # Please check if this matches your platform-policy-new1.json
