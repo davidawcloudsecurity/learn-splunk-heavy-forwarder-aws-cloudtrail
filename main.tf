@@ -12,6 +12,12 @@ variable "account_id" {
   type        = string
 }
 
+data sts_endpoint {
+}
+
+data_log_endpoint {
+}
+
 # Please check if this matches your platform-policy-new1.json
 resource "aws_iam_policy" "allow_ec2_hf_access_aws_services" {
   name        = "EC2_HF_Access_AWS_Services"
