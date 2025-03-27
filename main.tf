@@ -13,8 +13,8 @@ variable "account_id" {
 }
 
 # Please check if this matches your platform-policy-new1.json
-resource "aws_iam_policy" "allowec2" {
-  name        = "policy-1"
+resource "aws_iam_policy" "allow_ec2_hf_access_aws_services" {
+  name        = "EC2_HF_Access_AWS_Services"
   description = "Example IAM Policy"
   policy      = jsonencode({
     "Version": "2012-10-17",
