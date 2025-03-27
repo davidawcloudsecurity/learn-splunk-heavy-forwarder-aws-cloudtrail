@@ -21,7 +21,7 @@ variable "agency_code" {
 variable "example_user" {
   description = "The AWS account user where resources will be created."
   type        = string
-  default     = "${var.agency_code}_ABLR_CloudWatch"
+  default     = null
 }
 
 variable "example_group" {
@@ -155,7 +155,7 @@ resource "aws_iam_group_policy" "allow_ec2_hf_access_aws_services" {
 }
 
 resource "aws_iam_user" "example_user" {
-  name = var.example_user
+  name = var.example_user != null ? var.example_user : "${var.agency_code}_ABLR_CloudWatch"
 }
 
 resource "aws_iam_access_key" "example_access_key" {
