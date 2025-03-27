@@ -17,6 +17,11 @@ variable "example_user" {
   type        = string
 }
 
+variable "example_group" {
+  description = "The AWS account group where resources will be created."
+  type        = string  
+}
+
 data "aws_vpc_endpoint" "sts" {
   filter {
     name   = "service-name"
@@ -44,27 +49,23 @@ resource "aws_cloudwatch_log_group" "example" {
   retention_in_days = 365
 }
 
-resource "aws_iam_user" "example_user" {
-  name = var.example_user
+# Create IAM group
+resource "aws_iam_group" "example_group" {
+  name = var.example_group
 }
 
-resource "aws_iam_access_key" "example_access_key" {
+# Attach user to group
+resource "aws_iam_user_group_membership" "example_user_group_membership" {
   user = aws_iam_user.example_user.name
+  groups = [aws_iam_group.example_group.name]
 }
 
-output "access_key_id" {
-  value = aws_iam_access_key.example_access_key.id
-}
-
-output "secret_access_key" {
-  value = aws_iam_access_key.example_access_key.secret
-}
-
-# Please check if this matches your platform-policy-new1.json
-resource "aws_iam_policy" "allow_ec2_hf_access_aws_services" {
+# Optional - Attach a policy to the group
+resource "aws_iam_group_policy" "allow_ec2_hf_access_aws_services" {
   name        = "EC2_HF_Access_AWS_Services"
-  description = "Example IAM Policy"
-  policy      = jsonencode({
+  group = aws_iam_group.example_group.name
+
+  policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
       {
@@ -140,4 +141,20 @@ resource "aws_iam_policy" "allow_ec2_hf_access_aws_services" {
       }
     ]
   })
+}
+
+resource "aws_iam_user" "example_user" {
+  name = var.example_user
+}
+
+resource "aws_iam_access_key" "example_access_key" {
+  user = aws_iam_user.example_user.name
+}
+
+output "access_key_id" {
+  value = aws_iam_access_key.example_access_key.id
+}
+
+output "secret_access_key" {
+  value = aws_iam_access_key.example_access_key.secret
 }
