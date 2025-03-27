@@ -13,7 +13,7 @@ variable "account_id" {
 }
 
 # Please check if this matches your platform-policy-new1.json
-resource "aws_iam_policy" "platform_policy_new_01" {
+resource "aws_iam_policy" "allowec2" {
   name        = "policy-1"
   description = "Example IAM Policy"
   policy      = jsonencode({
