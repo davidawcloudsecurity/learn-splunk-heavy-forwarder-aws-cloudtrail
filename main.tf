@@ -36,7 +36,7 @@ output "log_vpce_endpoint" {
 
 resource "aws_cloudwatch_log_group" "example" {
   name              = "cwl-${var.account_id}-cloudtrail"
-  retention_in_days = 7
+  retention_in_days = 365
 }
 
 # Please check if this matches your platform-policy-new1.json
