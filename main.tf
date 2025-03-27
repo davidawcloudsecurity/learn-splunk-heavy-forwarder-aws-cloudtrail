@@ -12,10 +12,26 @@ variable "account_id" {
   type        = string
 }
 
-data sts_endpoint {
+data "aws_vpc_endpoint" "sts" {
+  filter {
+    name   = "service-name"
+    values = ["com.amazonaws.${var.aws_region}.sts"]
+  }
 }
 
-data_log_endpoint {
+output "sts_vpce_endpoint" {
+  value = data.aws_vpc_endpoint.sts.dns_entry
+}
+
+data "aws_vpc_endpoint" "log" {
+  filter {
+    name   = "service-name"
+    values = ["com.amazonaws.${var.aws_region}.log"]
+  }
+}
+
+output "log_vpce_endpoint" {
+  value = data.aws_vpc_endpoint.log.dns_entry
 }
 
 # Please check if this matches your platform-policy-new1.json
