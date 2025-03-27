@@ -30,8 +30,8 @@ data "aws_vpc_endpoint" "logs" {
   }
 }
 
-output "log_vpce_endpoint" {
-  value = data.aws_vpc_endpoint.log.dns_entry
+output "logs_vpce_endpoint" {
+  value = data.aws_vpc_endpoint.logs.dns_entry
 }
 
 resource "aws_cloudwatch_log_group" "example" {
