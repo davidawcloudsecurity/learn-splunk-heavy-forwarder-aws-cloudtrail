@@ -27,7 +27,7 @@ variable "example_user" {
 variable "example_group" {
   description = "The AWS account group where resources will be created."
   type        = string
-  default     = "${var.agency_code}_ABLR_CloudWatch_Group"
+  default     = null
 }
 
 data "aws_vpc_endpoint" "sts" {
@@ -59,7 +59,7 @@ resource "aws_cloudwatch_log_group" "example" {
 
 # Create IAM group
 resource "aws_iam_group" "example_group" {
-  name = var.example_group
+  name = var.example_group != null ? var.example_group : "${var.agency_code}_ABLR_CloudWatch_Group"
 }
 
 # Attach user to group
